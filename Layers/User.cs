@@ -9,7 +9,7 @@ namespace lab.Layers
         static void Main(string[] args)
         {
                      
-            Layers.DB db = new Layers.DB();
+            DB db = new DB();
             // db.create(new Securities { title = "title", status = "bought", price = 1300, date = default });
             List<Securities> records = db.Datas;
             Console.WriteLine(records[0].date.CompareTo(records[2].date));
