@@ -16,6 +16,33 @@ namespace lab.Layers
         }
 
 
+
+        public void add(string title, string status, int price, DateTime date)
+        {
+            db.create(new Securities { title = title, status = status, price = price, date = date });            
+        }
+
+        public void remove(Securities securities)
+        {
+            db.delete(securities);
+        }
+
+        public void remove(string id)
+        {
+            db.delete(id);
+        }
+
+        public void edit(string id, Securities securities)
+        {
+            db.update(id, securities);
+        }
+
+        public Securities show(string id) => db.get(id);
+        
+
+        public List<Securities> showAll() => db.get();
+        
+
         public int getSecByTime(DateTime timeS, DateTime timeE, bool isBought)
         {          
             int sum = 0;
@@ -25,7 +52,7 @@ namespace lab.Layers
             {
                 if (item.date.CompareTo(timeS) > 0 &&
                     item.date.CompareTo(timeE) < 0 &&
-                    item.status == status) { sum += item.price; }                               
+                    item.status.Trim() == status) { sum += item.price; }                               
             }
 
             return sum;
