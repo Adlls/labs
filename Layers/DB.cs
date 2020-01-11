@@ -10,7 +10,7 @@ namespace lab.Layers
     {
 
         private IMongoCollection<Securities> collections;
-        private List<Securities> datas;
+        protected List<Securities> datas;
         private readonly lab.DB db;
         public List<Securities> Datas { get => datas; }       
 
@@ -18,6 +18,7 @@ namespace lab.Layers
         {
             db = new lab.DB();                         
             collections = db.Collections;
+            lab.DB.serialize();
             datas = lab.DB.deserialize();            
         }
 
@@ -36,6 +37,7 @@ namespace lab.Layers
             lab.DB.serialize();
             datas = lab.DB.deserialize();
         }
+
         public void delete(Securities securities)
         {
             collections.DeleteOne(Securities => Securities.id == securities.id);

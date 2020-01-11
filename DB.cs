@@ -16,11 +16,11 @@ namespace lab
         {
             private static List<Securities> records;
 
-            public static async Task findDoc()
+            public static void findDoc()
             {
                 records = new List<Securities>();
                 var filter = new BsonDocument();
-                var securities = await DB.collections.Find(filter).ToListAsync();              
+                var securities =  DB.collections.Find(filter).ToList();              
 
                 foreach (Securities doc in securities) records.Add(doc);                
             }
@@ -31,6 +31,7 @@ namespace lab
 
         private static IMongoCollection<Securities> collections;
         private static MongoClient client;
+        private fs fs;
         public IMongoCollection<Securities> Collections { get => collections; }
 
         public DB()
@@ -38,13 +39,14 @@ namespace lab
             DB.client = new MongoClient("mongodb://localhost");
             var database = client.GetDatabase("labs");
             collections = database.GetCollection<Securities>("securities");
-            DBRecords.findDoc().GetAwaiter().GetResult();
+            DBRecords.findDoc();
+            fs = new fs();
             serialize();           
         }
 
 
-        public override string ToString() =>  serialize();
-        
+        public override string ToString() => serialize();
+
         public static string serialize()
         {
             string json = "";
@@ -62,7 +64,7 @@ namespace lab
             string getJson = (File.ReadAllText("/Users/admin/Projects/lab/lab/serilize.json")).Trim();
             string[] json = getJson.Split("\n");
 
-            foreach (var item in json) list.Add(JsonSerializer.Deserialize<Securities>(item));            
+            foreach (var item in json) list.Add(JsonSerializer.Deserialize<Securities>(item));
             return list;
         }
     }

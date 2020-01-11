@@ -43,18 +43,30 @@ namespace lab.Layers
         public List<Securities> showAll() => db.get();
         
 
-        public int getSecByTime(DateTime timeS, DateTime timeE, bool isBought)
+        public int getSecByTime(DateTime timeS, DateTime timeE, bool isBought, string title)
         {          
             int sum = 0;
             var status = isBought ? "bought" : "sold";
 
-            foreach (var item in records)
-            {
-                if (item.date.CompareTo(timeS) > 0 &&
-                    item.date.CompareTo(timeE) < 0 &&
-                    item.status.Trim() == status) { sum += item.price; }                               
-            }
 
+            if (String.IsNullOrEmpty(title))
+            {
+                foreach (var item in records)
+                {
+                    if (item.date.CompareTo(timeS) > 0 &&
+                        item.date.CompareTo(timeE) < 0 &&
+                        item.status.Trim() == status) { sum += item.price; }
+                }
+            }
+            else
+            {
+                foreach (var item in records)
+                {
+                    if (item.date.CompareTo(timeS) > 0 &&
+                        item.date.CompareTo(timeE) < 0 &&
+                        item.status.Trim() == status && item.title == title) { sum += item.price; }
+                }
+            }
             return sum;
         }
 
