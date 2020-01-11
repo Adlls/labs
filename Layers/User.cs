@@ -11,9 +11,6 @@ namespace lab.Layers
         {
             User user = new User();
             Business business = new Business();
-            DB DB = new DB();
-            //business.edit("5e1965dfecc25f4ffe7441f5", new Securities { title = "t", status = "sold", price = 555, date = DateTime.Now });
-            //DB.update("5e1965dfecc25f4ffe7441f5", new Securities { id = "5e1965dfecc25f4ffe7441f5", title = "t", status = "sold", price = 555, date = DateTime.Now });
 
             while (true)
             {
